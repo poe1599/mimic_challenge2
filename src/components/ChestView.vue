@@ -94,8 +94,6 @@ onMounted(() => {
 				<Button
 					v-if="!isAnimating"
 					:label="t('system.button.returnHome')"
-					icon="pi pi-arrow-right"
-					icon-pos="right"
 					@click="handleAction"
 				/>
 			</div>
@@ -124,7 +122,7 @@ onMounted(() => {
 .chest-text-container {
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
 	min-height: 200px;
 	padding: 40px;
 	background: rgba(255, 255, 255, 0.9);
@@ -138,7 +136,7 @@ onMounted(() => {
 	font-size: clamp(1rem, 4vw, 1.25rem);
 	line-height: 1.8;
 	color: #3f3f3f;
-	text-align: center;
+	text-align: left;
 	letter-spacing: 0.02em;
 	word-wrap: break-word;
 	white-space: pre-wrap;

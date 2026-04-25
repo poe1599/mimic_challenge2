@@ -2,29 +2,28 @@
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button'
-import Select from 'primevue/select'
+import Menu from 'primevue/menu'
 import Message from 'primevue/message'
+import mimicImage from '../assets/mimic.png'
 import { SUPPORT_LOCALES, setLocale, type AppLocale } from '../i18n'
 import { useRouterState } from '../app/router-state'
 import { useGameSettings } from '../composables/useGameSettings'
 import { pickRandomBattleScene } from '../game/services/scene-picker'
 import SettingsPanel from './SettingsPanel.vue'
 
-const { t, locale } = useI18n()
+const { t } = useI18n()
 const { navigate } = useRouterState()
 const { enabledBattleSceneIds } = useGameSettings()
 
 const settingsOpen = ref(false)
+const localeMenuRef = ref()
 
-const localeOptions = SUPPORT_LOCALES.map((code) => ({
-	code,
-	label: t('meta.locale', {}, { locale: code }),
-}))
-
-const selectedLocale = computed({
-	get: () => locale.value as AppLocale,
-	set: (value: AppLocale) => setLocale(value),
-})
+const localeMenuItems = computed(() =>
+	SUPPORT_LOCALES.map((code) => ({
+		label: t('meta.locale', {}, { locale: code }),
+		command: () => setLocale(code as AppLocale),
+	}))
+)
 
 const noBattleScenesAvailable = computed(() => enabledBattleSceneIds.value.length === 0)
 
@@ -33,18 +32,24 @@ function handleStart() {
 	if (!scene) return
 	navigate('battle', scene)
 }
+
+function toggleLocaleMenu(event: Event) {
+	localeMenuRef.value?.toggle(event)
+}
 </script>
 
 <template>
 	<div class="home-view">
 		<header class="home-topbar">
-			<Select
-				v-model="selectedLocale"
-				:options="localeOptions"
-				option-label="label"
-				option-value="code"
-				class="locale-select"
+			<Button
+				icon="pi pi-globe"
+				text
+				rounded
+				class="locale-btn"
+				:aria-label="t('home.localeLabel')"
+				@click="toggleLocaleMenu"
 			/>
+			<Menu ref="localeMenuRef" :model="localeMenuItems" popup />
 			<Button
 				icon="pi pi-cog"
 				text
@@ -56,7 +61,7 @@ function handleStart() {
 		</header>
 
 		<main class="home-main">
-			<div class="home-icon" aria-hidden="true">📦</div>
+			<img :src="mimicImage" alt="Mimic" class="home-icon" />
 			<h1 class="home-title">{{ t('home.title') }}</h1>
 		</main>
 
@@ -67,8 +72,6 @@ function handleStart() {
 			<Button
 				v-else
 				:label="t('system.button.startChallenge')"
-				icon="pi pi-play"
-				icon-pos="right"
 				size="large"
 				class="start-btn"
 				@click="handleStart"
@@ -90,16 +93,12 @@ function handleStart() {
 .home-topbar {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: flex-end;
 	padding: 12px 16px;
 	gap: 8px;
 }
 
-.locale-select {
-	flex: 1;
-	max-width: 180px;
-}
-
+.locale-btn,
 .settings-btn {
 	flex-shrink: 0;
 }
@@ -115,8 +114,8 @@ function handleStart() {
 }
 
 .home-icon {
-	font-size: 72px;
-	line-height: 1;
+	max-width: 240px;
+	height: auto;
 	filter: drop-shadow(0 4px 16px rgba(180, 83, 9, 0.3));
 }
 
