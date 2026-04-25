@@ -16,9 +16,27 @@ const { treasureEnabled, enabledBattleSceneIds, enabledChestSceneIds } = useGame
 
 const noBattleScenesWarning = computed(() => enabledBattleSceneIds.value.length === 0)
 
+const battleWinRate = computed(() => {
+	const enabledScenes = BATTLE_SCENES.filter((scene) => enabledBattleSceneIds.value.includes(scene.id))
+	if (enabledScenes.length === 0) return 0
+	const winCount = enabledScenes.filter((scene) => scene.result === 'win').length
+	return (winCount / enabledScenes.length) * 100
+})
+
 // 寶物劇本 & 空寶箱劇本的分類
 const treasureScenes = computed(() => CHEST_SCENES.filter(s => s.hasTreasure))
 const emptyScenes = computed(() => CHEST_SCENES.filter(s => !s.hasTreasure))
+
+const itemRate = computed(() => {
+	const enabledScenes = CHEST_SCENES.filter((scene) => enabledChestSceneIds.value.includes(scene.id))
+	const availableScenes = treasureEnabled.value
+		? enabledScenes
+		: enabledScenes.filter((scene) => !scene.hasTreasure)
+
+	if (availableScenes.length === 0) return 0
+	const treasureCount = availableScenes.filter((scene) => scene.hasTreasure).length
+	return (treasureCount / availableScenes.length) * 100
+})
 
 // 若 treasureEnabled=false 且沒有空寶箱劇本選中，警告
 const noEmptyScenesWarning = computed(() => 
@@ -40,6 +58,10 @@ const noEmptyScenesWarning = computed(() =>
 					{{ t('settings.treasureEnabled') }}
 				</label>
 				<ToggleSwitch inputId="treasure-toggle" v-model="treasureEnabled" />
+			</div>
+			<div class="settings-rate-list">
+				<p class="settings-rate-item">{{ t('settings.battleWinRate') }}: {{ battleWinRate.toFixed(1) }}%</p>
+				<p class="settings-rate-item">{{ t('settings.itemRate') }}: {{ itemRate.toFixed(1) }}%</p>
 			</div>
 		</section>
 
@@ -149,6 +171,19 @@ const noEmptyScenesWarning = computed(() =>
 	border: none;
 	border-top: 1px solid var(--p-content-border-color, #e5e7eb);
 	margin: 8px 0;
+}
+
+.settings-rate-list {
+	margin-top: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.settings-rate-item {
+	margin: 0;
+	font-size: 0.9rem;
+	color: var(--p-text-muted-color, #6b7280);
 }
 
 .settings-section-title {
