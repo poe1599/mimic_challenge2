@@ -11,6 +11,9 @@ const zhTW = {
 		treasureEnabled: '允許有寶物結局',
 		battleScriptsLabel: '可使用的戰鬥劇本',
 		noBattleScenesWarning: '至少需要選擇一個戰鬥劇本才能開始遊戲。',
+		treasureScriptsLabel: '寶物結局劇本',
+		emptyScriptsLabel: '空寶箱結局劇本',
+		noEmptyScenesWarning: '關閉有寶物結局後，至少需要選擇一個空寶箱結局劇本。',
 	},
 	battle: {
 		scripts: {
@@ -43,6 +46,34 @@ const zhTW = {
 				},
 			},
 		},
+	},
+	chest: {
+		scripts: {
+			treasure: {
+				1: {
+					sceneName: '寶物結局：稀有的魔法道具',
+					text: '你打開了寶箱，發現裡面有一件稀有的魔法道具！',
+				},
+				2: {
+					sceneName: '寶物結局：神秘的古代文物',
+					text: '你打開了寶箱，發現裡面有一件神秘的古代文物！',
+				},
+				3: {
+					sceneName: '寶物結局：精良的工藝品',
+					text: '你打開了寶箱，發現裡面有一件精良的工藝品！',
+				},
+			},
+			empty: {
+				1: {
+					sceneName: '空寶箱結局：空蕩蕩的寶箱',
+					text: '你打開了寶箱，發現裡面空蕩蕩的，什麼都沒有。',
+				},
+				2: {
+					sceneName: '空寶箱結局：捷足先登的冒險者',
+					text: '你打開了寶箱，發現裡面空蕩蕩的，似乎已經被另一個冒險者捷足先登了。',
+				},
+			}
+		}
 	},
 	system: {
 		button: {

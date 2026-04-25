@@ -7,13 +7,23 @@ import Checkbox from 'primevue/checkbox'
 import Message from 'primevue/message'
 import { useGameSettings } from '../composables/useGameSettings'
 import { BATTLE_SCENES } from '../game/scenes/battle-scenes'
+import { CHEST_SCENES } from '../game/scenes/chest-scenes'
 
 const visible = defineModel<boolean>('visible', { required: true })
 
 const { t } = useI18n()
-const { treasureEnabled, enabledBattleSceneIds } = useGameSettings()
+const { treasureEnabled, enabledBattleSceneIds, enabledChestSceneIds } = useGameSettings()
 
 const noBattleScenesWarning = computed(() => enabledBattleSceneIds.value.length === 0)
+
+// 寶物劇本 & 空寶箱劇本的分類
+const treasureScenes = computed(() => CHEST_SCENES.filter(s => s.hasTreasure))
+const emptyScenes = computed(() => CHEST_SCENES.filter(s => !s.hasTreasure))
+
+// 若 treasureEnabled=false 且沒有空寶箱劇本選中，警告
+const noEmptyScenesWarning = computed(() => 
+	!treasureEnabled.value && enabledChestSceneIds.value.filter((id: string) => emptyScenes.value.some(s => s.id === id)).length === 0
+)
 </script>
 
 <template>
@@ -53,6 +63,59 @@ const noBattleScenesWarning = computed(() => enabledBattleSceneIds.value.length 
 						:inputId="`scene-${scene.id}`"
 						:value="scene.id"
 						v-model="enabledBattleSceneIds"
+					/>
+					<label :for="`scene-${scene.id}`" class="settings-checkbox-label">
+						{{ t(scene.nameKey) }}
+					</label>
+				</div>
+			</div>
+		</section>
+
+		<hr class="settings-divider" />
+
+		<!-- 寶物劇本清單 -->
+		<section class="settings-section">
+			<p class="settings-section-title">{{ t('settings.treasureScriptsLabel') }}</p>
+
+			<div class="settings-checkbox-list">
+				<div
+					v-for="scene in treasureScenes"
+					:key="scene.id"
+					class="settings-checkbox-item"
+				>
+					<Checkbox
+						:inputId="`scene-${scene.id}`"
+						:value="scene.id"
+						v-model="enabledChestSceneIds"
+						:disabled="!treasureEnabled"
+					/>
+					<label :for="`scene-${scene.id}`" class="settings-checkbox-label" :class="{ 'opacity-50': !treasureEnabled }">
+						{{ t(scene.nameKey) }}
+					</label>
+				</div>
+			</div>
+		</section>
+
+		<hr class="settings-divider" />
+
+		<!-- 空寶箱劇本清單 -->
+		<section class="settings-section">
+			<p class="settings-section-title">{{ t('settings.emptyScriptsLabel') }}</p>
+
+			<Message v-if="noEmptyScenesWarning" severity="warn" class="settings-warning">
+				{{ t('settings.noEmptyScenesWarning') }}
+			</Message>
+
+			<div class="settings-checkbox-list">
+				<div
+					v-for="scene in emptyScenes"
+					:key="scene.id"
+					class="settings-checkbox-item"
+				>
+					<Checkbox
+						:inputId="`scene-${scene.id}`"
+						:value="scene.id"
+						v-model="enabledChestSceneIds"
 					/>
 					<label :for="`scene-${scene.id}`" class="settings-checkbox-label">
 						{{ t(scene.nameKey) }}

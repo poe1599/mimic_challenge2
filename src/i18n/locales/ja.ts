@@ -11,6 +11,9 @@ const ja = {
 		treasureEnabled: '宝物エンディングを許可',
 		battleScriptsLabel: '使用可能な戦闘シナリオ',
 		noBattleScenesWarning: 'ゲームを開始するには少なくとも1つの戦闘シナリオを選択してください。',
+		treasureScriptsLabel: '宝物エンディングシナリオ',
+		emptyScriptsLabel: '空の宝箱エンディングシナリオ',
+		noEmptyScenesWarning: '宝物エンディングを無効にした後、少なくとも1つの空の宝箱エンディングシナリオを選択する必要があります。',
 	},
 	battle: {
 		scripts: {
@@ -43,6 +46,34 @@ const ja = {
 				},
 			},
 		},
+	},
+	chest: {
+		scripts: {
+			treasure: {
+				1: {
+					sceneName: '宝物エンディング：レアな魔法装備',
+					text: '宝箱を開けると、レアな魔法装備が中に入っていた！',
+				},
+				2: {
+					sceneName: '宝物エンディング：謎めいた古代遺物',
+					text: '宝箱を開けると、謎めいた古代遺物が中に入っていた！',
+				},
+				3: {
+					sceneName: '宝物エンディング：見事な手工芸品',
+					text: '宝箱を開けると、見事な手工芸品が中に入っていた！',
+				},
+			},
+			empty: {
+				1: {
+					sceneName: '空の宝箱エンディング：がらんどうの宝箱',
+					text: '宝箱を開けると、中は何も入っていなかった。',
+				},
+				2: {
+					sceneName: '空の宝箱エンディング：先を越された冒険者',
+					text: '宝箱を開けると、中は何も入っていなかった。他の冒険者に先を越されたようだ。',
+				},
+			}
+		}
 	},
 	system: {
 		button: {

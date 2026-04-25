@@ -2,13 +2,14 @@ import { computed } from 'vue'
 import { useStorage } from '@vueuse/core'
 import type { GameSettings } from '../game/types'
 import { ALL_BATTLE_SCENE_IDS } from '../game/scenes/battle-scenes'
+import { ALL_CHEST_SCENE_IDS } from '../game/scenes/chest-scenes'
 
 const SETTINGS_STORAGE_KEY = 'mimic-challenge-settings'
 
 const defaultSettings: GameSettings = {
 	treasureEnabled: true,
 	enabledBattleSceneIds: [...ALL_BATTLE_SCENE_IDS],
-	enabledChestSceneIds: []
+	enabledChestSceneIds: [...ALL_CHEST_SCENE_IDS]
 }
 
 export function useGameSettings() {

@@ -11,6 +11,9 @@ const en = {
 		treasureEnabled: 'Allow treasure endings',
 		battleScriptsLabel: 'Available battle scenarios',
 		noBattleScenesWarning: 'At least one battle scenario must be selected to start the game.',
+		treasureScriptsLabel: 'Treasure ending scenarios',
+		emptyScriptsLabel: 'Empty chest ending scenarios',
+		noEmptyScenesWarning: 'With treasure endings disabled, at least one empty chest ending scenario must be selected.',
 	},
 	battle: {
 		scripts: {
@@ -43,6 +46,34 @@ const en = {
 				},
 			},
 		},
+	},
+	chest: {
+		scripts: {
+			treasure: {
+				1: {
+					sceneName: 'Treasure Ending: Rare Magical Item',
+					text: 'You open the chest and discover a rare magical item inside!',
+				},
+				2: {
+					sceneName: 'Treasure Ending: Mysterious Ancient Artifact',
+					text: 'You open the chest and discover a mysterious ancient artifact inside!',
+				},
+				3: {
+					sceneName: 'Treasure Ending: Exquisite Artifact',
+					text: 'You open the chest and discover an exquisite artifact inside!',
+				},
+			},
+			empty: {
+				1: {
+					sceneName: 'Empty Chest Ending: Empty Chest',
+					text: 'You open the chest only to find it completely empty.',
+				},
+				2: {
+					sceneName: 'Empty Chest Ending: Another Adventurer Got There First',
+					text: 'You open the chest only to find it empty—another adventurer must have gotten there first.',
+				},
+			}
+		}
 	},
 	system: {
 		button: {
