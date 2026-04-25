@@ -1,0 +1,16 @@
+services:
+  workspace:
+    image: node:24.15.0-slim
+    container_name: mimic-challenge2-workspace
+    command: /bin/bash
+    working_dir: /app
+    mem_limit: 4g
+    tty: true
+    volumes:
+      - ./:/app
+      # npm 認證掛載（跨平台：Windows/Linux/Mac）
+      - ~/.npmrc:/root/.npmrc
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
