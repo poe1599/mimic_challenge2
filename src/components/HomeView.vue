@@ -3,12 +3,16 @@ import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button'
 import Select from 'primevue/select'
+import Message from 'primevue/message'
 import { SUPPORT_LOCALES, setLocale, type AppLocale } from '../i18n'
 import { useRouterState } from '../app/router-state'
+import { useGameSettings } from '../composables/useGameSettings'
+import { pickRandomBattleScene } from '../game/services/scene-picker'
 import SettingsPanel from './SettingsPanel.vue'
 
 const { t, locale } = useI18n()
 const { navigate } = useRouterState()
+const { enabledBattleSceneIds } = useGameSettings()
 
 const settingsOpen = ref(false)
 
@@ -22,8 +26,12 @@ const selectedLocale = computed({
 	set: (value: AppLocale) => setLocale(value),
 })
 
+const noBattleScenesAvailable = computed(() => enabledBattleSceneIds.value.length === 0)
+
 function handleStart() {
-	navigate('battle')
+	const scene = pickRandomBattleScene(enabledBattleSceneIds.value)
+	if (!scene) return
+	navigate('battle', scene)
 }
 </script>
 
@@ -53,7 +61,11 @@ function handleStart() {
 		</main>
 
 		<footer class="home-footer">
+			<Message v-if="noBattleScenesAvailable" severity="warn" class="no-scenes-warning">
+				{{ t('settings.noBattleScenesWarning') }}
+			</Message>
 			<Button
+				v-else
 				:label="t('system.button.startChallenge')"
 				icon="pi pi-play"
 				icon-pos="right"

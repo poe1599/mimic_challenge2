@@ -1,19 +1,17 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { storeToRefs } from 'pinia'
 import Drawer from 'primevue/drawer'
 import ToggleSwitch from 'primevue/toggleswitch'
 import Checkbox from 'primevue/checkbox'
 import Message from 'primevue/message'
-import { useSettingsStore } from '../stores/settings'
+import { useGameSettings } from '../composables/useGameSettings'
 import { BATTLE_SCENES } from '../game/scenes/battle-scenes'
 
 const visible = defineModel<boolean>('visible', { required: true })
 
 const { t } = useI18n()
-const settingsStore = useSettingsStore()
-const { treasureEnabled, enabledBattleSceneIds } = storeToRefs(settingsStore)
+const { treasureEnabled, enabledBattleSceneIds } = useGameSettings()
 
 const noBattleScenesWarning = computed(() => enabledBattleSceneIds.value.length === 0)
 </script>

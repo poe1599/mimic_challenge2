@@ -22,7 +22,7 @@
 ## 3. 推薦技術切分
 
 - UI/頁面：Vue SFC + PrimeVue
-- 狀態管理：Pinia（遊戲狀態 + 設定）
+- 狀態管理：VueUse composable + localStorage（遊戲狀態 + 設定）
 - 多語系：vue-i18n
 - 業務邏輯：純 TypeScript 模組（易測試）
 - PWA：vite-plugin-pwa
@@ -33,9 +33,8 @@
 src/
   app/
     router-state.ts
-  stores/
-    game.ts
-    settings.ts
+  composables/
+    useGameSettings.ts
   i18n/
     index.ts
     locales/

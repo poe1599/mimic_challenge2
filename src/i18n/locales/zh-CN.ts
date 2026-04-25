@@ -47,6 +47,7 @@ const zhCN = {
 	system: {
 		button: {
 			startChallenge: '开始挑战',
+			skipAnimation: '跳过',
 			openChest: '开启宝箱',
 			returnHome: '返回首页',
 		},

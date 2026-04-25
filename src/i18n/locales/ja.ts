@@ -47,6 +47,7 @@ const ja = {
 	system: {
 		button: {
 			startChallenge: 'チャレンジ開始',
+			skipAnimation: 'スキップ',
 			openChest: '宝箱を開ける',
 			returnHome: 'ホームへ戻る',
 		},

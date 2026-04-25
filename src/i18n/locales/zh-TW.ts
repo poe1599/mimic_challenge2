@@ -47,6 +47,7 @@ const zhTW = {
 	system: {
 		button: {
 			startChallenge: '開始挑戰',
+			skipAnimation: '略過',
 			openChest: '開啟寶箱',
 			returnHome: '返回首頁',
 		},

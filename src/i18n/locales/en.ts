@@ -47,6 +47,7 @@ const en = {
 	system: {
 		button: {
 			startChallenge: 'Start Challenge',
+			skipAnimation: 'Skip',
 			openChest: 'Open Chest',
 			returnHome: 'Return Home',
 		},
